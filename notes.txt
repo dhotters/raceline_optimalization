@@ -1,0 +1,3 @@
+New thing to optimize is the sum of the curvature of the spline
+
+other inputs could be car width for example
