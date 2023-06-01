@@ -5,6 +5,11 @@ close all
 n = 1000;
 track = track_plotter("track\Silverstone.csv", n);
 
+% Vector of percentage trackwidth location of the race line
+a_vec = ones(length(track.x_m), 1).*0.1; 
+
+getRaceLine(a_vec, track)
+
 % % Compute curvature
 % X = [track.x_m, track.y_m];
 % 
@@ -27,8 +32,3 @@ track = track_plotter("track\Silverstone.csv", n);
 % hold off
 % 
 % total_curvature = sum(1./R, 'omitnan');
-
-% Vector of percentage trackwidth location of the race line
-a_vec = ones(length(track.x_m), 1).*0.1; 
-
-getRaceLine(a_vec, track)

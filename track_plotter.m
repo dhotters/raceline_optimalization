@@ -10,47 +10,53 @@ function [out] = track_plotter(filePath, n)
 % Load in the track data
 track = table2struct(readtable(filePath),"ToScalar", true);
 
-%% Compute the left and right track limits
+% Transform to equidistant data
+[centerline, cumulativeLen, finalStepLocs] = equidistant(track.x_m, track.y_m, n);
+
+% Get track limits at same locations
+limit_left_equi = interp1(cumulativeLen, track.w_tr_left_m, finalStepLocs, 'spline');
+limit_right_equi = interp1(cumulativeLen, track.w_tr_right_m, finalStepLocs, 'spline');
+
+%% limits have to be offset still by track widths
 wr_x = [];
 wr_y = [];
 wl_x = [];
 wl_y = [];
-
-for i = 1:length(track.x_m)-1
+for i = 1:n-1
     % compute the vector of the direction
-    cur_p = [track.x_m(i), track.y_m(i)];
-    to_p = [track.x_m(i+1), track.y_m(i+1)];
+    cur_p = [centerline(i, 1), centerline(i, 2)];
+    to_p = [centerline(i+1, 1), centerline(i+1, 2)];
     
     % This is the vector of direction
     d = to_p - cur_p;
     d = d/norm(d); % normalize
 
     % compute a vector 90 degrees with this direction vector
+    % ie normal to the median
     w = [d(2), -d(1)]; % this rotates 90 deg CW
 
     % append the left and right track limits from the track width
-    r_vec =  w.*track.w_tr_right_m(i);
+    r_vec =  w.*limit_right_equi(i);
     wr_x = [wr_x, cur_p(1) + r_vec(1)];
     wr_y = [wr_y, cur_p(2) + r_vec(2)];
     
-    l_vec = -w.*track.w_tr_left_m(i);
+    l_vec = -w.*limit_left_equi(i);
     wl_x = [wl_x, cur_p(1) + l_vec(1)];
     wl_y = [wl_y, cur_p(2) + l_vec(2)];
 end
 
-% Transform to equidistant data
-centerline = equidistant(track.x_m, track.y_m, n);
+left_limit = [wl_x', wl_y'];
+right_limit = [wr_x', wr_y'];
 
-% Do the same for the track width
-right_limit = equidistant(wr_x', wr_y', n);
-left_limit = equidistant(wl_x', wl_y', n);
-
-% Plot the track
-plot(centerline(:, 1), centerline(:, 2))
+%% Plot the track
+plot(centerline(:, 1), centerline(:, 2), 'b')
 hold on
 axis equal
-plot(right_limit(:, 1), right_limit(:, 2))
-plot(left_limit(:, 1), left_limit(:, 2))
+
+% plot track limits
+plot(wl_x, wl_y, 'black');
+plot(wr_x, wr_y, 'black');
+
 
 % returns
 out.x_m = centerline(:, 1);
