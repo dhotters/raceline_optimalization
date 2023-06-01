@@ -50,11 +50,10 @@ wr_y = [wr_y, wr_y(1)];
 wl_x = [wl_x, wl_x(1)];
 wl_y = [wl_y, wl_y(1)];
 
-% Create splines to close all curves
-x = linspace(min(track.x_m), max(track.x_m), 1000); % x values at which the splines are evaluated
-
 % plot
 hold on
+axis equal
+
 plot(track.x_m, track.y_m)
 plot(wr_x, wr_y, 'k')
 plot(wl_x, wl_y, 'k')
