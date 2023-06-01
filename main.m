@@ -2,11 +2,11 @@ clc
 clear all
 close all
 
-n = 10000;
-spa = track_plotter("track\Spa.csv", n);
+n = 1000;
+track = track_plotter("track\Silverstone.csv", n);
 
 % Compute curvature
-X = [spa.x_m, spa.y_m];
+X = [track.x_m, track.y_m];
 
 [L,R,K] = curvature(X);
 figure;
@@ -15,7 +15,7 @@ title('Curvature radius vs. cumulative curve length')
 xlabel L
 ylabel R
 figure;
-h = plot(spa.x_m',spa.y_m'); 
+h = plot(track.x_m',track.y_m'); 
 grid on
 axis equal
 set(h,'marker','.');
@@ -23,6 +23,9 @@ xlabel x
 ylabel y
 title('2D curve with curvature vectors')
 hold on
-quiver(spa.x_m,spa.y_m,K(:,1),K(:,2));
+quiver(track.x_m,track.y_m,K(:,1),K(:,2));
 hold off
 
+total_curvature = nansum(1./R);
+
+a_vec = zeros(length(track.x_m)).*0.5;
