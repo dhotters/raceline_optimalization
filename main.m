@@ -26,7 +26,7 @@ hold on
 quiver(track.x_m,track.y_m,K(:,1),K(:,2));
 hold off
 
-total_curvature = nansum(1./R);
+total_curvature = sum(1./R, 'omitnan');
 
 % Vector of percentage trackwidth location of the race line
 a_vec = ones(length(track.x_m), 1).*0.5; 
