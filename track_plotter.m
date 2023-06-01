@@ -64,11 +64,6 @@ axis equal
 plot(right_limit(:, 1), right_limit(:, 2))
 plot(left_limit(:, 1), left_limit(:, 2))
 
-
-% plot(track.x_m, track.y_m)
-% plot(wr_x, wr_y, 'k')
-% plot(wl_x, wl_y, 'k')
-
 % returns
 out.x_m = centerline(:, 1);
 out.y_m = centerline(:, 2);
