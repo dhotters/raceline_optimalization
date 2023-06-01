@@ -2,4 +2,5 @@ clc
 clear all
 close all
 
-track_plotter("track\Spa.csv");
+n = 1000;
+spa = track_plotter("track\Spa.csv", n);

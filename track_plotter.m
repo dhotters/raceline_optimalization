@@ -1,4 +1,4 @@
-function [out] = track_plotter(filePath)
+function [out] = track_plotter(filePath, n)
 % This function will plot the track for a given csv file containing the
 % following columns of data:
 % x_m: x location data of the median (center) line
@@ -11,10 +11,10 @@ function [out] = track_plotter(filePath)
 track = table2struct(readtable(filePath),"ToScalar", true);
 
 % close the curve
-track.x_m = [track.x_m', track.x_m(1)];
-track.y_m = [track.y_m', track.y_m(1)];
-track.w_tr_right_m = [track.w_tr_right_m', track.w_tr_right_m(1)];
-track.w_tr_left_m = [track.w_tr_left_m', track.w_tr_left_m(1)];
+%track.x_m = [track.x_m', track.x_m(1)];
+%track.y_m = [track.y_m', track.y_m(1)];
+%track.w_tr_right_m = [track.w_tr_right_m', track.w_tr_right_m(1)];
+%track.w_tr_left_m = [track.w_tr_left_m', track.w_tr_left_m(1)];
 
 %% Compute the left and right track limits
 wr_x = [];
@@ -45,25 +45,36 @@ for i = 1:length(track.x_m)-1
 end
 
 % close the width curves
-wr_x = [wr_x, wr_x(1)];
-wr_y = [wr_y, wr_y(1)];
-wl_x = [wl_x, wl_x(1)];
-wl_y = [wl_y, wl_y(1)];
+%wr_x = [wr_x, wr_x(1)];
+%wr_y = [wr_y, wr_y(1)];
+%wl_x = [wl_x, wl_x(1)];
+%wl_y = [wl_y, wl_y(1)];
 
-% plot
+% Transform to equidistant data
+centerline = equidistant(track.x_m, track.y_m, n);
+
+% Do the same for the track width
+right_limit = equidistant(wr_x', wr_y', n);
+left_limit = equidistant(wl_x', wl_y', n);
+
+% Plot the track
+plot(centerline(:, 1), centerline(:, 2))
 hold on
 axis equal
+plot(right_limit(:, 1), right_limit(:, 2))
+plot(left_limit(:, 1), left_limit(:, 2))
 
-plot(track.x_m, track.y_m)
-plot(wr_x, wr_y, 'k')
-plot(wl_x, wl_y, 'k')
+
+% plot(track.x_m, track.y_m)
+% plot(wr_x, wr_y, 'k')
+% plot(wl_x, wl_y, 'k')
 
 % returns
-out.x_m = track.x_m;
-out.y_m = track.y_m;
-out.wr_x = wr_x;
-out.wr_y = wr_y;
-out.wl_x = wl_x;
-out.wl_y = wl_y;
+out.x_m = centerline(:, 1);
+out.y_m = centerline(:, 2);
+out.tw_left_x = left_limit(:, 1);
+out.tw_left_y = left_limit(:, 2);
+out.tw_right_x = right_limit(:, 1);
+out.tw_right_y = right_limit(:, 2);
 end
 
