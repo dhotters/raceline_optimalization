@@ -28,4 +28,5 @@ hold off
 
 total_curvature = nansum(1./R);
 
-a_vec = zeros(length(track.x_m)).*0.5;
+% Vector of percentage trackwidth location of the race line
+a_vec = ones(length(track.x_m), 1).*0.5; 
