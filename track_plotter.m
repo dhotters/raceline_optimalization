@@ -10,12 +10,6 @@ function [out] = track_plotter(filePath, n)
 % Load in the track data
 track = table2struct(readtable(filePath),"ToScalar", true);
 
-% close the curve
-%track.x_m = [track.x_m', track.x_m(1)];
-%track.y_m = [track.y_m', track.y_m(1)];
-%track.w_tr_right_m = [track.w_tr_right_m', track.w_tr_right_m(1)];
-%track.w_tr_left_m = [track.w_tr_left_m', track.w_tr_left_m(1)];
-
 %% Compute the left and right track limits
 wr_x = [];
 wr_y = [];
@@ -43,12 +37,6 @@ for i = 1:length(track.x_m)-1
     wl_x = [wl_x, cur_p(1) + l_vec(1)];
     wl_y = [wl_y, cur_p(2) + l_vec(2)];
 end
-
-% close the width curves
-%wr_x = [wr_x, wr_x(1)];
-%wr_y = [wr_y, wr_y(1)];
-%wl_x = [wl_x, wl_x(1)];
-%wl_y = [wl_y, wl_y(1)];
 
 % Transform to equidistant data
 centerline = equidistant(track.x_m, track.y_m, n);

@@ -35,6 +35,9 @@ ref_p = right_point;
 new_p = ref_p + width_vec.*a_vec(i);
 new_points_x = [new_points_x, new_p(1)];
 new_points_y = [new_points_y, new_p(2)];
+
+% Debug arrows
+quiver(ref_p(1), ref_p(2),width_vec(1), width_vec(2))
 end
 
 hold on
