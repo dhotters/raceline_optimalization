@@ -37,11 +37,13 @@ new_points_x = [new_points_x, new_p(1)];
 new_points_y = [new_points_y, new_p(2)];
 
 % Debug arrows
-quiver(ref_p(1), ref_p(2),width_vec(1), width_vec(2))
+quiver(ref_p(1), ref_p(2),width_vec(1), width_vec(2), 'g')
 end
 
 hold on
-plot(new_points_x, new_points_y, '--*r');
+plot(new_points_x, new_points_y, 'r');
 
+out.x = new_points_x;
+out.y = new_points_y;
 end
 
