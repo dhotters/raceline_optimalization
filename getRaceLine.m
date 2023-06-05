@@ -37,13 +37,18 @@ new_points_x = [new_points_x, new_p(1)];
 new_points_y = [new_points_y, new_p(2)];
 
 % Debug arrows
-%quiver(ref_p(1), ref_p(2),width_vec(1), width_vec(2), 'g')
+% quiver(ref_p(1), ref_p(2),width_vec(1), width_vec(2), 'g')
+% hold on
 end
 
 % calculate curvature of the current raceline
 % Compute curvature
 [L,R,K] = curvature([new_points_x', new_points_y']);
 total_curvature = sum(1./R, 'omitnan');
+
+% Close the raceline
+new_points_x = [new_points_x, new_points_x(1)];
+new_points_y = [new_points_y, new_points_y(1)];
 
 % Output
 out.x = new_points_x;
