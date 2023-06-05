@@ -51,8 +51,8 @@ new_points_x = [new_points_x, new_points_x(1)];
 new_points_y = [new_points_y, new_points_y(1)];
 
 % Plot the curvature profile if needed
-figure(2)
-plot(track.x_m)
+%figure(2)
+%plot(track.x_m)
 
 % Output
 out.x = new_points_x;
