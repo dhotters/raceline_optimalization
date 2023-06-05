@@ -36,7 +36,8 @@ for i = 1:n-1
     
     % This is the vector of direction
     d = to_p - cur_p;
-    d = d/norm(d); % normalize
+    s_cur = norm(d);
+    d = d/s_cur; % normalize
 
     % compute a vector 90 degrees with this direction vector
     % ie normal to the median

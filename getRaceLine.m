@@ -50,9 +50,14 @@ total_curvature = sum(1./R, 'omitnan');
 new_points_x = [new_points_x, new_points_x(1)];
 new_points_y = [new_points_y, new_points_y(1)];
 
+% Plot the curvature profile if needed
+figure(2)
+plot(track.x_m)
+
 % Output
 out.x = new_points_x;
 out.y = new_points_y;
-out.curvature = total_curvature;
+out.total_curvature = total_curvature;
+out.curvature = 1./R;
 end
 
