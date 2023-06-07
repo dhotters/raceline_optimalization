@@ -10,11 +10,11 @@ track = trackReader("track\Spa.csv", n);
 % x0 being the initial state of the coefficients (ie the design variables)
 x0 = ones(n, 1).*0.5; 
 
-% Compute raceline with the coeffcient vector
-%raceline = getRaceLine(x0, track);
-
-% Plot the current state
-%track_plotter(track, raceline);
+% % Compute raceline with the coeffcient vector
+% raceline = getRaceLine(x0, track);
+% 
+% % Plot the current state
+% track_plotter(track, raceline);
 
 % Setup car
 %car.mass = 1000; % kg
@@ -31,14 +31,13 @@ options.Display         = 'iter-detailed';
 options.Algorithm       = 'sqp';
 options.FunValCheck     = 'off';
 options.PlotFcns        = {@optimplotfval, @optimplotx, @optimplotfirstorderopt, @optimplotstepsize, @optimplotconstrviolation, @optimplotfunccount};
-options.MaxIter         = 1500;
-%options.DiffMinChange   = 1e-8;
-%options.DiffMaxChange   = 0.5;
+options.MaxIter         = 200;
 options.MaxFunEvals = 1e9;
 
-
 %% fmincon to try it out on curvature
+tic
 [x,FVAL,EXITFLAG,OUTPUT] = fmincon(@opt, x0, [], [], [], [], lb, ub, [], options);
+toc
 
 % plot result
 figure(2)

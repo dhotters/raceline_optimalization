@@ -12,9 +12,9 @@ function [R,M,k] = circumcenter(A,B,C)
   if nargout == 1
     a = norm(B-C);     % slightly faster if only R is required
     R = a*b*c/2/norm(D);
-    if norm(D) == 0
-      R = Inf;
-    end
+    %if norm(D) == 0
+    %  R = Inf;
+    %end
     return
   end
   E = cross(D,B-A);
@@ -24,9 +24,9 @@ function [R,M,k] = circumcenter(A,B,C)
   R = norm(G);  % Radius of curvature
   if R == 0
     k = G;
-  elseif norm(D) == 0
-    R = Inf;
-    k = D;
+  %elseif norm(D) == 0
+  %  R = Inf;
+  %  k = D;
   else
     k = G'/R^2;   % Curvature vector
   end
