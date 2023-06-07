@@ -3,7 +3,7 @@ function [] = track_plotter(track, raceline)
 % Additionaly also capable of plotting the current raceline
 
 %% Plot the track
-plot(track.x_m, track.y_m, 'b')
+plot(track.x_m, track.y_m, '--b')
 hold on
 axis equal
 

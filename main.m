@@ -2,7 +2,7 @@ clc
 clear all
 close all
 
-n = 100;
+n = 200;
 global track
 track = trackReader("track\Spa.csv", n);
 
@@ -16,9 +16,11 @@ x0 = ones(n, 1).*0.5;
 % % Plot the current state
 % track_plotter(track, raceline);
 
-% Setup car
-%car.mass = 1000; % kg
-%getLapTime(track, raceline, car)
+% % Setup car
+% car.mass = 1000; % kg
+% car.friction_coef = 1.25;
+% 
+% getLapTime(track, raceline, car)
 
 %% TODO
 %% 1 - Get a velocity profile with a given raceline curve
@@ -50,5 +52,5 @@ function [f] = opt(x)
     raceline = getRaceLine(x, track);
 
     % objective function
-    f = raceline.total_curvature;
+    f = sum(raceline.rad_per_meter);
 end

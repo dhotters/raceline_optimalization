@@ -43,7 +43,7 @@ end
 
 % calculate curvature of the current raceline
 % Compute curvature
-total_curvature = curvature([new_points_x', new_points_y']);
+curv = curvature([new_points_x', new_points_y']);
 
 % Close the raceline
 new_points_x = [new_points_x, new_points_x(1)];
@@ -52,6 +52,9 @@ new_points_y = [new_points_y, new_points_y(1)];
 % Output
 out.x = new_points_x;
 out.y = new_points_y;
-out.total_curvature = total_curvature;
+
+out.K = curv.K;
+out.L = curv.L;
+out.rad_per_meter = curv.rad_per_meter;
 end
 
