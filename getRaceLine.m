@@ -10,9 +10,9 @@ function [out] = getRaceLine(a_vec, track)
 
 
 % Check if a_vec contains values between 0-1
-% if ~(min(a_vec) >= 0 && max(a_vec) <= 1)
-% error("a_vec contains values which are out of bounds of the track!")
-% end
+if ~(min(a_vec) >= 0 && max(a_vec) <= 1)
+error("a_vec contains values which are out of bounds of the track!")
+end
 
 % Compute direction vector around the right limit of the track
 
@@ -43,25 +43,15 @@ end
 
 % calculate curvature of the current raceline
 % Compute curvature
-%[L,R,K] = curvature([new_points_x', new_points_y']);
-%total_curvature = sum(1./R, 'omitnan');
-total_curvature = curvature2([new_points_x', new_points_y']);
+total_curvature = curvature([new_points_x', new_points_y']);
 
 % Close the raceline
 new_points_x = [new_points_x, new_points_x(1)];
 new_points_y = [new_points_y, new_points_y(1)];
 
-% Plot the curvature profile if needed
-%figure(2)
-%plot(track.x_m)
-
 % Output
 out.x = new_points_x;
 out.y = new_points_y;
 out.total_curvature = total_curvature;
-% out.L = L;
-% out.R = R;
-% out.K = K;
-%out.curvature = 1./R;
 end
 

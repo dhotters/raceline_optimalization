@@ -1,34 +1,25 @@
-function [L,R,k] = curvature(X)
-% source: https://nl.mathworks.com/matlabcentral/fileexchange/69452-curvature-of-a-1d-curve-in-a-2d-or-3d-space
-% Radius of curvature and curvature vector for 2D or 3D curve
-%  [L,R,k] = curvature(X)
-%   X:   2 or 3 column array of x, y (and possibly z) coordiates
-%   L:   Cumulative arc length
-%   R:   Radius of curvature
-%   k:   Curvature vector
-% The scalar curvature value is 1./R
-% Version 2.6: Calculates end point values for closed curve
-  N = size(X,1);
-  dims = size(X,2);
-  if dims == 2
-    X = [X,zeros(N,1)];  % Use 3D expressions for 2D as well
-  end
-  L = zeros(N,1);
-  R = NaN(N,1);
-  k = NaN(N,3);
-  for i = 2:N-1
-    [R(i),~,k(i,:)] = circumcenter(X(i,:)',X(i-1,:)',X(i+1,:)');
-    L(i) = L(i-1)+norm(X(i,:)-X(i-1,:));
-  end
-  if norm(X(1,:)-X(end,:)) < 1e-10 % Closed curve. 
-    [R(1),~,k(1,:)] = circumcenter(X(end-1,:)',X(1,:)',X(2,:)');
-    R(end) = R(1);
-    k(end,:) = k(1,:);
-    L(end) = L(end-1) + norm(X(end,:)-X(end-1,:));
-  end
-  i = N;
-  L(i) = L(i-1)+norm(X(i,:)-X(i-1,:));
-  if dims == 2
-    k = k(:,1:2);
-  end
+function [curvature] = curvature(X)
+% Alternate way to compute the curvature
+% this method computes the rad/m change which will be minimized
+
+N = size(X, 1);
+
+curvature = 0;
+for i = 2:N-1
+    P_c = X(i, :); % Central point
+    P_f = X(i+1, :); % forward point
+    P_b = X(i-1, :); % backward point
+    
+    % line segments
+    seg_1 = P_c - P_b;
+    seg_2 = P_f - P_c;
+
+    % compute angle between them
+    a = abs(atan2d(seg_1(1)*seg_2(2) - seg_1(2)*seg_2(1), seg_1(1)*seg_2(1)+seg_1(2)*seg_2(2)));
+
+    % compute rad/m
+    curvature = curvature + (a/(norm(seg_1) + norm(seg_2)))^2;
 end
+
+end
+

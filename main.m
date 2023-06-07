@@ -31,7 +31,7 @@ options.Display         = 'iter-detailed';
 options.Algorithm       = 'sqp';
 options.FunValCheck     = 'off';
 options.PlotFcns        = {@optimplotfval, @optimplotx, @optimplotfirstorderopt, @optimplotstepsize, @optimplotconstrviolation, @optimplotfunccount};
-options.MaxIter         = 200;
+options.MaxIter         = 1000;
 options.MaxFunEvals = 1e9;
 
 %% fmincon to try it out on curvature
