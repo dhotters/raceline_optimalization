@@ -14,6 +14,8 @@ n = length(raceline.x); % number of points used to discretize the track
 
 %% Step 1 of the reference
 % Find the local minima of the path radius
+raceline.K(1) = 0; % Else it will take start and end point as a corner
+raceline.K(end) = 0;
 [peaks, locations_idx] = findpeaks(raceline.K); % Note negative for local minima
 peaks = peaks; % correct values
 
@@ -21,6 +23,7 @@ peaks = peaks; % correct values
 figure
 plot(raceline.L, raceline.R, 'r');
 hold on
+title("len vs R")
 scatter(raceline.L(locations_idx), 1./peaks, '*black');
 
 %% Step 2 of the reference
@@ -71,7 +74,7 @@ for i = 1:length(locations_idx)
     ft = sqrt(ft_max^2 - car.mass / raceline.R(locations_idx(i)) * (ft_max/fn_max)^2 *v0);
 
     a = ft/car.mass; % acceleration at the corner
-    s = raceline.L(locations_idx(i)+1)-raceline.L(locations_idx(i)); % segment length
+    s = raceline.L(locations_idx(i)) - raceline.L(locations_idx(i)-1); % segment length
 
     v_current = sqrt(v0^2 + 2*a*s);
     if ~(v_current < v_critical)

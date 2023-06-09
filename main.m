@@ -2,7 +2,7 @@ clc
 clear all
 close all
 
-n = 1500;
+n = 500;
 global track
 track = trackReader("track\Spa.csv", n);
 
@@ -11,7 +11,8 @@ track = trackReader("track\Spa.csv", n);
 x0 = ones(n, 1).*0.5; 
 
 % Compute raceline with the coeffcient vector
-raceline = getRaceLine(x0, track);
+%raceline = getRaceLine(x0, track);
+raceline = load('raceline.mat').raceline;
 
 % Plot the current state
 track_plotter(track, raceline);
@@ -46,6 +47,8 @@ toc
 
 % plot result
 figure(2)
+raceline = getRaceLine(x, track);
+save("raceline", "raceline");
 track_plotter(track, getRaceLine(x, track));
 
 function [f] = opt(x)
