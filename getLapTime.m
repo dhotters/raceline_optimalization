@@ -144,5 +144,23 @@ plot(raceline.L, v, 'r')
 xlabel("s")
 ylabel("v")
 
+
+
+%% Compute lap time from the velocity vector
+% using v^2 = v0^2 + 2as
+t = 0;
+for i = 2:n
+    v0 = v(i-1);
+    s = raceline.L(i) - raceline.L(i-1);
+
+    a = (v(i)^2 - v0^2) / (2*s);
+
+    dt = (v(i) - v0) / a;
+    t = t + dt;
+
+end
+
+disp("Lap time: " + t + " seconds")
+
 end
 
