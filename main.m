@@ -2,7 +2,7 @@ clc
 clear all
 close all
 
-n = 100;
+n = 1500;
 global track
 track = trackReader("track\Spa.csv", n);
 
@@ -10,16 +10,11 @@ track = trackReader("track\Spa.csv", n);
 % x0 being the initial state of the coefficients (ie the design variables)
 x0 = ones(n, 1).*0.5; 
 
-% % Compute raceline with the coeffcient vector
-% raceline = getRaceLine(x0, track);
-% 
-% % Plot the current state
-% track_plotter(track, raceline);
-% 
-% figure(3);
-% plot(raceline.L, raceline.rad_per_meter, 'r');
-% hold on
-% plot(raceline.L, raceline.K, 'b');
+% Compute raceline with the coeffcient vector
+raceline = getRaceLine(x0, track);
+
+% Plot the current state
+track_plotter(track, raceline);
 
 % Setup car
 car.mass = 1000; % kg
@@ -28,7 +23,7 @@ car.max_g_brake = 5; % Max G force when braking
 car.max_g_lateral = 6; % Max G force laterally
 
 % Test lap time
-%getLapTime(track, raceline, car)
+getLapTime(track, raceline, car)
 
 %% TODO
 %% 1 - Get a velocity profile with a given raceline curve
