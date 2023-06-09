@@ -2,7 +2,7 @@ clc
 clear all
 close all
 
-n = 200;
+n = 100;
 global track
 track = trackReader("track\Spa.csv", n);
 
@@ -15,12 +15,20 @@ x0 = ones(n, 1).*0.5;
 % 
 % % Plot the current state
 % track_plotter(track, raceline);
-
-% % Setup car
-% car.mass = 1000; % kg
-% car.friction_coef = 1.25;
 % 
-% getLapTime(track, raceline, car)
+% figure(3);
+% plot(raceline.L, raceline.rad_per_meter, 'r');
+% hold on
+% plot(raceline.L, raceline.K, 'b');
+
+% Setup car
+car.mass = 1000; % kg
+car.max_g_accel = 2; % Max G force in acceleration
+car.max_g_brake = 5; % Max G force when braking
+car.max_g_lateral = 6; % Max G force laterally
+
+% Test lap time
+%getLapTime(track, raceline, car)
 
 %% TODO
 %% 1 - Get a velocity profile with a given raceline curve
@@ -34,7 +42,7 @@ options.Algorithm       = 'sqp';
 options.FunValCheck     = 'off';
 options.PlotFcns        = {@optimplotfval, @optimplotx, @optimplotfirstorderopt, @optimplotstepsize, @optimplotconstrviolation, @optimplotfunccount};
 options.MaxIter         = 1000;
-options.MaxFunEvals = 1e9;
+options.MaxFunEvals     = 1e9;
 
 %% fmincon to try it out on curvature
 tic

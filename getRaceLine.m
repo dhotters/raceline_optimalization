@@ -18,7 +18,7 @@ end
 
 new_points_x = [];
 new_points_y = [];
-for i = 1:length(track.tw_left_x)-1
+for i = 1:length(track.tw_left_x)
 
 left_point = [track.tw_left_x(i), track.tw_left_y(i)];
 right_point = [track.tw_right_x(i), track.tw_right_y(i)];
@@ -37,23 +37,21 @@ new_points_x = [new_points_x, new_p(1)];
 new_points_y = [new_points_y, new_p(2)];
 
 % Debug arrows
-% quiver(ref_p(1), ref_p(2),width_vec(1), width_vec(2), 'g')
-% hold on
+%quiver(ref_p(1), ref_p(2),width_vec(1), width_vec(2), 'g')
+%hold on
 end
 
 % calculate curvature of the current raceline
 % Compute curvature
 curv = curvature([new_points_x', new_points_y']);
 
-% Close the raceline
-new_points_x = [new_points_x, new_points_x(1)];
-new_points_y = [new_points_y, new_points_y(1)];
-
 % Output
 out.x = new_points_x;
 out.y = new_points_y;
 
 out.K = curv.K;
+out.R = curv.R;
+out.L = curv.L;
 out.rad_per_meter = curv.rad_per_meter;
 end
 

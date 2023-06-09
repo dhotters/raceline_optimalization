@@ -5,8 +5,10 @@ function [out] = curvature(X)
 N = size(X, 1);
 
 %% TODO Add first and last point to this computation?
-R = [];
-rad_per_meter = [];
+R = [0];
+rad_per_meter = [0];
+L = [0];
+l = 0;
 for i = 2:N-1
     P_c = X(i, :); % Central point
     P_f = X(i+1, :); % forward point
@@ -24,12 +26,21 @@ for i = 2:N-1
 
     % Additionally also compute local radius
     R = [R, circumradius(P_b, P_c, P_f)];
+
+    l = l+norm(seg_1);
+    L = [L, l];
 end
+
+% Last point data
+R = [R, 0];
+L = [L, L(end) + norm(seg_2)];
+rad_per_meter = [rad_per_meter, 0];
 
 
 % Output
 out.rad_per_meter = rad_per_meter;
 out.R = R;
 out.K = 1./R;
+out.L = L;
 end
 
