@@ -2,7 +2,7 @@ clc
 clear all
 close all
 
-n = 500;
+n = 100;
 global track
 track = trackReader("track\Spa.csv", n);
 
