@@ -29,6 +29,8 @@ wr_x = [];
 wr_y = [];
 wl_x = [];
 wl_y = [];
+
+L = [0];
 for i = 1:n-1
     % compute the vector of the direction
     cur_p = [centerline(i, 1), centerline(i, 2)];
@@ -51,6 +53,9 @@ for i = 1:n-1
     l_vec = -w.*limit_left_equi(i);
     wl_x = [wl_x, cur_p(1) + l_vec(1)];
     wl_y = [wl_y, cur_p(2) + l_vec(2)];
+
+    % L(s)
+    L = [L, s_cur];
 end
 
 % close the track
@@ -69,5 +74,6 @@ out.tw_left_x = left_limit(:, 1);
 out.tw_left_y = left_limit(:, 2);
 out.tw_right_x = right_limit(:, 1);
 out.tw_right_y = right_limit(:, 2);
+out.L = L;
 end
 

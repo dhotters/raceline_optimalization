@@ -6,7 +6,6 @@ N = size(X, 1);
 
 %% TODO Add first and last point to this computation?
 R = [];
-L = [];
 rad_per_meter = [];
 for i = 2:N-1
     P_c = X(i, :); % Central point
@@ -26,6 +25,7 @@ for i = 2:N-1
     % Additionally also compute local radius
     R = [R, circumradius(P_b, P_c, P_f)];
 end
+
 
 % Output
 out.rad_per_meter = rad_per_meter;
