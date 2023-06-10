@@ -9,8 +9,6 @@ g = 9.80665; % m/s2 gravitational acceleration
 ft_max = car.max_g_accel * car.mass * g;
 fb_max = car.max_g_brake * car.mass * g;
 fn_max = car.max_g_lateral * car.mass * g;
-%fn_max = 22500;
-%ft_max = 12000;
 n = length(raceline.x); % number of points used to discretize the track
 
 %% Step 1 of the reference
@@ -165,10 +163,13 @@ for i = locations_idx(end)+2:n
     v(i) = v_current;
 end
 
-figure
-plot(raceline.L, v, 'r')
-xlabel("s")
-ylabel("v")
+%% TODO Add other steps
+
+% debug
+% figure
+% plot(raceline.L, v, 'r')
+% xlabel("s")
+% ylabel("v")
 
 %% Compute lap time from the velocity vector
 % using v^2 = v0^2 + 2as as derived
@@ -182,8 +183,8 @@ for i = 2:n
     t = t + dt;
 end
 
-% display the laptime
-disp("Lap time: " + t + " seconds")
+% % display the laptime
+% disp("Lap time: " + t + " seconds")
 
 end
 

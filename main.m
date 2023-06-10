@@ -12,22 +12,23 @@ x0 = ones(n, 1).*0.5;
 
 % Compute raceline with the coeffcient vector
 %raceline = getRaceLine(x0, track);
-raceline = load('raceline.mat').raceline;
+%raceline = load('raceline.mat').raceline;
 
 % Plot the current state
-track_plotter(track, raceline);
+%track_plotter(track, raceline);
 
 % Setup car
-car.mass = 1000; % kg
-car.max_g_accel = 2; % Max G force in acceleration
+global car
+car.mass = 750; % kg
+car.max_g_accel = 1; % Max G force in acceleration
 car.max_g_brake = 5; % Max G force when braking
-car.max_g_lateral = 6; % Max G force laterally
-car.cd = 0.0015; % drag coefficient (assumed constant)
+car.max_g_lateral = 3; % Max G force laterally
+car.cd = 0.05; % drag coefficient (assumed constant)
 car.rho = 1.225; % air density around the track
 car.S = 1.3; % frontal area m2
 
 % Test lap time
-getLapTime(track, raceline, car)
+%getLapTime(track, raceline, car)
 
 %% TODO
 %% 1 - Get a velocity profile with a given raceline curve
@@ -45,6 +46,7 @@ options.MaxFunEvals     = 1e9;
 
 %% fmincon to try it out on curvature
 tic
+figure(1)
 [x,FVAL,EXITFLAG,OUTPUT] = fmincon(@opt, x0, [], [], [], [], lb, ub, [], options);
 toc
 
@@ -56,10 +58,12 @@ track_plotter(track, getRaceLine(x, track));
 
 function [f] = opt(x)
     global track
+    global car
 
     % calculate raceline given a coef vector x
     raceline = getRaceLine(x, track);
 
     % objective function
-    f = sum(raceline.rad_per_meter);
+    %f = sum(raceline.rad_per_meter);
+    f = getLapTime(track, raceline, car);
 end
