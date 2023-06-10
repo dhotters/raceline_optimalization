@@ -22,6 +22,9 @@ car.mass = 1000; % kg
 car.max_g_accel = 2; % Max G force in acceleration
 car.max_g_brake = 5; % Max G force when braking
 car.max_g_lateral = 6; % Max G force laterally
+car.cd = 0.0015; % drag coefficient (assumed constant)
+car.rho = 1.225; % air density around the track
+car.S = 1.3; % frontal area m2
 
 % Test lap time
 getLapTime(track, raceline, car)
