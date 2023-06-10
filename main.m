@@ -12,18 +12,22 @@ x0 = ones(n, 1).*0.5;
 
 % Compute raceline with the coeffcient vector
 %raceline = getRaceLine(x0, track);
-%raceline = load('raceline.mat').raceline;
+%raceline = load('raceline800.mat').raceline;
 
 % Plot the current state
 %track_plotter(track, raceline);
 
 % Setup car
+% NOTE not a good idea to take F1 car values here cause those benefit alot
+% from aerodynamic performance hence we assume our vehicle does not benefit
+% from aerodynamics -> else the max traction etc is not correct anymore as
+% it is speed dependant
 global car
 car.mass = 750; % kg
-car.max_g_accel = 1; % Max G force in acceleration
-car.max_g_brake = 5; % Max G force when braking
-car.max_g_lateral = 3; % Max G force laterally
-car.cd = 0.05; % drag coefficient (assumed constant)
+car.max_g_accel = 0.5; % Max G force in acceleration
+car.max_g_brake = 1; % Max G force when braking
+car.max_g_lateral = 1; % Max G force laterally
+car.cd = 0.25; % drag coefficient (assumed constant)
 car.rho = 1.225; % air density around the track
 car.S = 1.3; % frontal area m2
 
@@ -33,7 +37,7 @@ car.S = 1.3; % frontal area m2
 %% TODO
 %% 1 - Get a velocity profile with a given raceline curve
 %% With this velocity profile compute the lap time
-%% 2 - Optimize the a_vec and create equality and inequality constraints
+%% 2 - Optimize the coefficient vector and create equality and inequality constraints
 
 lb = zeros(n, 1);
 ub = ones(n, 1);
