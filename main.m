@@ -9,7 +9,7 @@ global raceline0
 global t0
 
 n = 400;
-track = trackReader("track\Spa.csv", n);
+track = trackReader("track\Silverstone.csv", n);
 
 % Setup car
 % NOTE not a good idea to take F1 car values here cause those benefit alot
