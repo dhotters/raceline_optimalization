@@ -12,7 +12,7 @@ x0 = ones(n, 1).*0.5;
 
 % Compute raceline with the coeffcient vector
 %raceline = getRaceLine(x0, track);
-%raceline = load('raceline800.mat').raceline;
+%raceline = load('raceline100.mat').raceline;
 
 % Plot the current state
 %track_plotter(track, raceline);
@@ -47,11 +47,13 @@ options.FunValCheck     = 'off';
 options.PlotFcns        = {@optimplotfval, @optimplotx, @optimplotfirstorderopt, @optimplotstepsize, @optimplotconstrviolation, @optimplotfunccount};
 options.MaxIter         = 1000;
 options.MaxFunEvals     = 1e9;
+options.TolFun = 1e-9;
+options.TolX = 1e-10;
 
 %% fmincon to try it out on curvature
 tic
 figure(1)
-[x,FVAL,EXITFLAG,OUTPUT] = fmincon(@opt, x0, [], [], [], [], lb, ub, [], options);
+[x,FVAL,EXITFLAG,OUTPUT] = fmincon(@opt, x0, [], [], [], [], lb, ub, @constraints, options);
 toc
 
 % plot result
@@ -70,4 +72,17 @@ function [f] = opt(x)
     % objective function
     %f = sum(raceline.rad_per_meter);
     f = getLapTime(track, raceline, car);
+end
+
+function [c, ceq] = constraints(x)
+
+    % We have constraint that the start and end point of the coef vector must
+    % be the same
+    P_start = x(1);
+    P_end = x(end);
+
+    delta = P_start - P_end;
+
+    ceq = [delta];
+    c = [];
 end
