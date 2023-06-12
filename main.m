@@ -8,7 +8,7 @@ global car
 global raceline0
 global t0
 
-n = 400;
+n = 300;
 track = trackReader("track\Silverstone.csv", n);
 
 % Setup car
@@ -26,7 +26,9 @@ car.S = 1.3; % frontal area m2
 
 % Vector of percentage trackwidth location of the race line
 % x0 being the initial state of the coefficients (ie the design variables)
-x0 = ones(n, 1).*0.5; 
+%x0 = ones(n, 1).*0.5; 
+centerline = getRaceLine(ones(n, 1).*0.5, track);
+x0 = getInitialCond(track, n, centerline);
 
 % Compute raceline with the coeffcient vector
 raceline0 = getRaceLine(x0, track); % We use the initial raceline to normalize
@@ -81,7 +83,7 @@ function [f] = opt(x)
 
     % objective function
     %f = sum(raceline.rad_per_meter);
-    f = (3*K+t)/4;
+    f = t;
 end
 
 function [c, ceq] = constraints(x)
