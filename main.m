@@ -8,7 +8,7 @@ global car
 global raceline0
 global t0
 
-n = 300;
+n = 400;
 track = trackReader("track\Silverstone.csv", n);
 
 % Setup car
@@ -28,6 +28,7 @@ car.S = 1.3; % frontal area m2
 % x0 being the initial state of the coefficients (ie the design variables)
 %x0 = ones(n, 1).*0.5; 
 centerline = getRaceLine(ones(n, 1).*0.5, track);
+%track_plotter(track, centerline);
 x0 = getInitialCond(track, n, centerline);
 
 % Compute raceline with the coeffcient vector

@@ -22,7 +22,7 @@ for i = 2:N-1
     a = abs(atan2d(seg_1(1)*seg_2(2) - seg_1(2)*seg_2(1), seg_1(1)*seg_2(1)+seg_1(2)*seg_2(2)));
 
     % compute rad/m
-    rad_per_meter = [rad_per_meter, (a/(norm(seg_1) + norm(seg_2)))^2];
+    rad_per_meter = [rad_per_meter, (a*(norm(seg_1) + norm(seg_2)))^2];
 
     % Additionally also compute local radius
     R = [R, circumradius(P_b, P_c, P_f)];

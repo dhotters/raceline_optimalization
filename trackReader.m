@@ -24,22 +24,47 @@ track.w_tr_left_m = [track.w_tr_left_m', track.w_tr_left_m(1)]';
 limit_left_equi = interp1(cumulativeLen, track.w_tr_left_m, finalStepLocs, 'spline');
 limit_right_equi = interp1(cumulativeLen, track.w_tr_right_m, finalStepLocs, 'spline');
 
-%% limits have to be offset still by track widths
-wr_x = [];
-wr_y = [];
-wl_x = [];
-wl_y = [];
 
-L = [0];
-for i = 1:n-1
+%% First segment
+
+% compute the vector of the direction
+cur_p = [centerline(1, 1), centerline(1, 2)];
+to_p = [centerline(2, 1), centerline(2, 2)];
+
+% This is the vector of direction
+d = to_p - cur_p;
+s_cur = norm(d);
+d = d/s_cur; % normalize
+
+% compute a vector 90 degrees with this direction vector
+% ie normal to the median
+w = [d(2), -d(1)]; % this rotates 90 deg CW
+
+% append the left and right track limits from the track width
+r_vec =  w.*limit_right_equi(1);
+wr_x = [cur_p(1) + r_vec(1)];
+wr_y = [cur_p(2) + r_vec(2)];
+
+l_vec = -w.*limit_left_equi(1);
+wl_x = [cur_p(1) + l_vec(1)];
+wl_y = [cur_p(2) + l_vec(2)];
+
+% L(s)
+L = [0, s_cur];
+
+for i = 2:n-1
     % compute the vector of the direction
     cur_p = [centerline(i, 1), centerline(i, 2)];
     to_p = [centerline(i+1, 1), centerline(i+1, 2)];
+    last_p = [centerline(i-1, 1), centerline(i-1, 2)];
     
     % This is the vector of direction
-    d = to_p - cur_p;
-    s_cur = norm(d);
-    d = d/s_cur; % normalize
+    d_to = to_p - cur_p;
+    s_cur = norm(d_to);
+
+    % this is vector of direction between last and to point
+    d = to_p - last_p;
+    d = d/norm(d); % normalize
 
     % compute a vector 90 degrees with this direction vector
     % ie normal to the median

@@ -37,8 +37,8 @@ new_points_x = [new_points_x, new_p(1)];
 new_points_y = [new_points_y, new_p(2)];
 
 % Debug arrows
-%quiver(ref_p(1), ref_p(2),width_vec(1), width_vec(2), 'g')
-%hold on
+% quiver(ref_p(1), ref_p(2),width_vec(1), width_vec(2), 'g')
+% hold on
 end
 
 % calculate curvature of the current raceline
