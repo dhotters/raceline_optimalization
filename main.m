@@ -12,7 +12,7 @@ n = 400;
 track = trackReader("track\Silverstone.csv", n);
 
 % Setup car
-% NOTE not a good idea to take F1 car values here cause those benefit alot
+% NOTE not a good idea to take F1 car values here cause those benefit a lot
 % from aerodynamic performance hence we assume our vehicle does not benefit
 % from aerodynamics -> else the max traction etc is not correct anymore as
 % it is speed dependant
@@ -96,6 +96,6 @@ function [c, ceq] = constraints(x)
 
     delta = P_start - P_end;
 
-    ceq = [delta];
+    ceq = delta;
     c = [];
 end
