@@ -100,5 +100,6 @@ out.tw_left_y = left_limit(:, 2);
 out.tw_right_x = right_limit(:, 1);
 out.tw_right_y = right_limit(:, 2);
 out.L = L;
+out.name = extractAfter(extractBefore(filePath, "."), "\");
 end
 

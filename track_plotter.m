@@ -4,7 +4,7 @@ function [] = track_plotter(track, raceline)
 
 %% Plot the track
 figure(1)
-plot(track.x_m, track.y_m, '--b')
+%plot(track.x_m, track.y_m, '--b')
 hold on
 axis equal
 
@@ -20,5 +20,6 @@ end
 
 % Plot raceline
 plot(raceline.x, raceline.y, 'r');
+title(track.name + ", n = " + raceline.n);
 end
 

@@ -8,8 +8,9 @@ global car
 global raceline0
 global t0
 
+tic
 n = 100;
-track = trackReader("track\Silverstone.csv", n);
+track = trackReader("track\Nuerburgring.csv", n);
 
 % Setup car
 % NOTE not a good idea to take F1 car values here cause those benefit a lot
@@ -58,7 +59,7 @@ options.TolFun = 1e-3;
 options.TolX = 1e-15;
 
 %% fmincon to try it out on curvature
-tic
+
 figure(1)
 [x,FVAL,EXITFLAG,OUTPUT] = fmincon(@opt, x0, [], [], [], [], lb, ub, @constraints, options);
 toc
@@ -68,6 +69,11 @@ figure(2)
 raceline = getRaceLine(x, track);
 save("raceline", "raceline");
 track_plotter(track, getRaceLine(x, track));
+
+
+%% plot by loading the mat file
+% raceline = load("raceline.mat").raceline;
+% track_plotter(track, raceline);
 
 function [f] = opt(x)
     global track

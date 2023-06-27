@@ -15,10 +15,8 @@ options.TolFun = 1e-3;
 options.TolX = 1e-6;
 
 %% fmincon to try it out on curvature
-tic
 figure(1)
 [x,FVAL,EXITFLAG,OUTPUT] = fmincon(@opt, x0, [], [], [], [], lb, ub, @constraints, options);
-toc
 
 function [f] = opt(x)
     % calculate raceline given a coef vector x

@@ -53,5 +53,6 @@ out.K = curv.K;
 out.R = curv.R;
 out.L = curv.L;
 out.rad_per_meter = curv.rad_per_meter;
+out.n = length(a_vec);
 end
 
