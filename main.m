@@ -8,7 +8,7 @@ global car
 global raceline0
 global t0
 
-n = 400;
+n = 100;
 track = trackReader("track\Silverstone.csv", n);
 
 % Setup car
